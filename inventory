@@ -1,7 +1,0 @@
-ansible_become: yes
-ansible_become_user: root
-ansible_become_password: "{{vault_gateway_root_password}}"
-ansible_become_method : enable
-192.168.56.24
-192.168.56.26
-
