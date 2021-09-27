@@ -1,39 +1,42 @@
 ---
-
 - hosts: all
   become: true
   tasks:
 
+
+
   - name: Update repository index
     apt:
       update_cache: yes
-    when: ansible_distribution_version =="Ubuntu
-"
+    when: ansible_distribution_version == "Ubuntu"
+
   - name: install apache2 package
     apt:
       name: apache2
       state: latest
-    when: ansible_distribution_version =="Ubuntu"
+    when: ansible_distribution == "Ubuntu"
 
   - name: add php support for apache
     apt:
       name: libapache2-mod-php
       state: latest
-    when: ansible_distribution_version =="Ubuntu"
+    when: ansible_distribution == "Ubuntu"
 
 
 
   - name: Update repository index
     dnf:
       update_cache: yes
-    when: ansible_distribution_version =="CentOS"
-  - name: httpd
+    when: ansible_distribution_version == "CentOS8"
+
+  - name: install apache package
     dnf:
-      name: apache2
+      name: httpd
       state: latest
-    when: ansible_distribution_version =="CentOS"
+    when: ansible_distribution == "CentOS8"
+
   - name: add php support for apache
     dnf:
       name: php
       state: latest
-    when: ansible_distribution_version =="CentOS"
+    when: ansible_distribution == "CentOS8"
