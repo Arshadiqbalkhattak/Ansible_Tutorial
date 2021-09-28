@@ -1,0 +1,63 @@
+---
+- hosts: all
+  become: true
+  tasks:
+
+
+  - name: Install updates (CentOS8)
+    dnf:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "CentOS8"
+  
+  - name: Install updates (Ubuntu)
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+
+- hosts: Web_Servers
+  become: yes
+  tasks: 
+
+  - name: Install apache2 and php packages on Ubuntu Servers
+    apt:
+      name: 
+        - apache2
+        - libapache2-mod-php
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+
+  - name: Install apache and php for CentOS8 Servers
+    dnf:
+      name: 
+        - httpd
+        - php
+      state: latest
+    when: ansible_distribution == "CentOS8"
+
+- hosts: db_Servers
+  become: true
+  tasks:
+  - name: Install mariad package (CentOS8)
+    dnf: 
+      name: mariadb
+      state: latest
+    when: ansible_distribution == "CentOS"
+
+  - name: Install Mariadb package (Ubuntu)
+    apt:
+      name: mariadb-server
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+
+- hosts: File_Servers
+  become: true
+  tasks:
+  - name: Install Samba Package
+    package: 
+      name: samba
+      state: latest
