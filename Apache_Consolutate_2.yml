@@ -4,7 +4,7 @@
   tasks:
 
 
-  - name: install apache2 and php packages on Ubuntu
+  - name: Install Apache2 and PHP Packages On Ubuntu
     apt:
       name: 
         - apache2
@@ -14,7 +14,7 @@
     when: ansible_distribution == "Ubuntu"
 
 
-  - name: install apache and php  packages on CentOS8
+  - name: Install Apache and PHP  Packages on CentOS8
     dnf:
       name: 
         - httpd

@@ -1,0 +1,76 @@
+---
+- hosts: all
+  become: true
+  tasks:
+
+  - name: Install updates (CentOS8)
+    tags: always
+    dnf:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "CentOS8"
+  
+  - name: Install updates (Ubuntu)
+    tags: always
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+- hosts: Web_Servers
+  become: yes
+  tasks: 
+
+  - name: Install apache2 and php packages on Ubuntu Servers
+    tags: apache,apache2,ubuntu
+    apt:
+      name: 
+        - apache2
+        - libapache2-mod-php
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Install apache and php for CentOS8 Servers
+    tags: apache,centos,httpd
+    dnf:
+      name: 
+        - httpd
+        - php
+      state: latest
+    when: ansible_distribution == "CentOS8"
+
+  - name: Copy default html file for site
+    tags: apache,apache2,httpd
+    copy: 
+      src: /home/server/Ansible_Tutorial/homepage/homepage.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
+
+
+- hosts: db_Servers
+  become: true
+  tasks:
+  - name: Install mariad package (CentOS8)
+    tags: centos,db,mariadb
+    dnf: 
+      name: mariadb
+      state: latest
+    when: ansible_distribution == "CentOS"
+
+  - name: Install Mariadb package (Ubuntu)
+    tags: db,mariadb,ubuntu
+    apt:
+      name: mariadb-server
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+- hosts: File_Servers
+  become: true
+  tasks:
+  - name: Install Samba Package
+    tags: samba
+    package: 
+      name: samba
+      state: latest
