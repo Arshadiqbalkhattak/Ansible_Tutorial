@@ -1,0 +1,75 @@
+---
+- hosts: all
+  become: true
+  tasks:
+
+
+
+  - name: Update repository index on Ubuntu
+    apt:
+      update_cache: yes
+    when: ansible_distribution_version == "Ubuntu"
+
+- hosts: Web_Servers
+  become: yes
+  tasks:
+
+  - name: Install apache2 and php packages on Ubuntu
+    apt:
+      name: 
+        - apache2
+        - libapache2-mod-php
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+  - name: start apache2 (Ubuntu)
+    tags: apache,centos,httpd
+    service:
+      name: apache2
+      state: started
+      enabled: yes
+    when: ansible_distribution == "Ubuntu"
+ 
+
+  - name: Update repository index on CentOS
+    dnf:
+      update_cache: yes
+    when: ansible_distribution_version == "CentOS"
+
+
+- hosts: Web_Servers
+  become: yes
+  tasks:
+
+  - name: Install apache and php  packages on CentOS
+    dnf:
+      name: 
+        - httpd
+        - php
+      state: latest
+    when: ansible_distribution == "CentOS"
+
+  - name: Start httpd (CentOS)
+    tags: apache,centos,httpd
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+    when: ansible_distribution == "CentOS"
+
+  - name: Change e-mailaddress for admin
+    tags: apache,centos,httpd
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^ServerAdmin'
+      line: ServerAdmin somebod@somebod.somewhere.com
+    when: ansible_distribution == "CentOS"
+    register: httpd
+
+  - name: Restart httpd (CentOS)
+    tags: apache,centos,httpd
+    service:
+      name: httpd
+      state: restarted
+    when: httpd.changed
+

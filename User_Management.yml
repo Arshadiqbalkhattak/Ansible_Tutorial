@@ -1,0 +1,9 @@
+--- 
+- hosts: all
+  become: true  
+  tasks: 
+  -  name: "Create a user on each Server"
+     tags: always
+     user: 
+        name: Mekek
+        groups: root

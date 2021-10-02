@@ -6,42 +6,23 @@
   - name: Install updates on (CentOS)
     tags: always
     dnf:
+      upgrade: dist
       update_only: yes
       update_cache: yes
     when: ansible_distribution == "CentOS"
   
-  - name: Install updates (Ubuntu)
+  - name: Install updates on (Ubuntu)
     tags: always
     apt:
       upgrade: dist
       update_cache: yes
     when: ansible_distribution == "Ubuntu"
 
-
-- hosts: Workstation
-  become: true
-  tasks:
-  
-  - name: install unzip
-    package: 
-      name: unzip
-
-  - name: install terraform
-    unarchive:
-      src: https://releases.hashicorp.com/terraform/1.0.8/terraform_1.0.8_freebsd_amd64.zip 
-      dest: /usr/local/bin
-      remote_src: yes
-      mode: 0755
-      owner: root
-      group: root
-
-
-
 - hosts: Web_Servers
   become: yes
   tasks: 
 
-  - name: Install apache2 and php packages on Ubuntu Servers
+  - name: Install apache2 and php packages on Ubuntu Web-Servers
     tags: apache,apache2,ubuntu
     apt:
       name: 
@@ -50,7 +31,16 @@
       state: latest
     when: ansible_distribution == "Ubuntu"
 
-  - name: Install apache and php for CentOS Servers
+  - name: start apache2 (Ubuntu)
+    tags: apache,centos,httpd
+    service:
+      name: apache2
+      state: started
+      enabled: yes
+    when: ansible_distribution == "Ubuntu"
+
+
+  - name: Install apache and php on CentOS Web-Servers
     tags: apache,centos,httpd
     dnf:
       name: 
@@ -59,7 +49,8 @@
       state: latest
     when: ansible_distribution == "CentOS"
 
-  - name: Copy default html file for site
+
+  - name: Copy custom html file for the Web-Server site
     tags: apache,apache2,httpd
     copy: 
       src: /home/server/Ansible_Tutorial/homepage/homepage.html
@@ -67,6 +58,30 @@
       owner: root
       group: root
       mode: 0644
+
+  - name: Start httpd service on (CentOS)
+    tags: apache,centos,httpd
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+    when: ansible_distribution == "CentOS"
+
+  - name: Change e-mail address for admin
+    tags: apache,centos,httpd
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^ServerAdmin'
+      line: ServerAdmin somebod@somebod.somewhere.com
+    when: ansible_distribution == "CentOS"
+    register: httpd
+
+  - name: Restart httpd on (CentOS)
+    tags: apache,centos,httpd
+    service:
+      name: httpd
+      state: restarted
+    when: httpd.changed
 
 
 - hosts: db_Servers

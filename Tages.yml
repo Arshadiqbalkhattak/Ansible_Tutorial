@@ -3,12 +3,12 @@
   become: true
   tasks:
 
-  - name: Install updates (CentOS8)
+  - name: Install updates (CentOS)
     tags: always
     dnf:
       update_only: yes
       update_cache: yes
-    when: ansible_distribution == "CentOS8"
+    when: ansible_distribution == "CentOS"
   
   - name: Install updates (Ubuntu)
     tags: always
@@ -30,19 +30,19 @@
       state: latest
     when: ansible_distribution == "Ubuntu"
 
-  - name: Install apache and php for CentOS8 Servers
+  - name: Install apache and php for CentOS Servers
     tags: apache,centos,httpd
     dnf:
       name: 
         - httpd
         - php
       state: latest
-    when: ansible_distribution == "CentOS8"
+    when: ansible_distribution == "CentOS"
 
 - hosts: db_Servers
   become: true
   tasks:
-  - name: Install mariad package (CentOS8)
+  - name: Install mariad package (CentOS)
     tags: centos,db,mariadb
     dnf: 
       name: mariadb
@@ -59,7 +59,7 @@
 - hosts: File_Servers
   become: true
   tasks:
-  - name: Install Samba Package
+  - name: Install Samba Package on File Server
     tags: samba
     package: 
       name: samba

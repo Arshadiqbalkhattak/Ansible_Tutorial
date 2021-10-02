@@ -1,0 +1,24 @@
+[Web_Servers]
+node1@192.168.56.32
+centos8@192.168.56.34
+
+[db_Servers]
+node2@192.168.56.33
+
+[File_Servers]
+node3@192.168.56.35
+
+[Workstation]
+workstation@192.168.56.36
+
+#node1@192.168.56.32
+#node2@192.168.56.33
+#centos8@192.168.56.34
+#node3@192.168.56.35
+#workstation@192.168.56.36
+
+# node1@192.168.56.32 apache_package=apache2 php_package=libapache2-mod-php
+# node2@192.168.56.33 apache_package=apache2 php_package=libapache2-mod-php
+# centos8@192.168.56.34 apache_package=httpd php_package=php
+# node3@192.168.56.35 apache_package=apache2 php_package=libapache2-mod-php
+# workstation@192.168.56.36 apache_package=apache2 php_package=libapache2-mod-php

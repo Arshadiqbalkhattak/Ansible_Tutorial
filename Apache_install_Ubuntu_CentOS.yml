@@ -20,19 +20,19 @@
       state: latest
     when: ansible_distribution == "Ubuntu"
 
-  - name: Update CentOS8 Repository Index
+  - name: Update CentOS Repository Index
     dnf:
       update_cache: yes
-    when: ansible_distribution_version == "CentOS8"
+    when: ansible_distribution_version == "CentOS"
 
-  - name: Install Apache Package on CentOS8
+  - name: Install Apache Package on CentOS
     dnf:
       name: httpd
       state: latest
-    when: ansible_distribution == "CentOS8"
+    when: ansible_distribution == "CentOS"
 
-  - name: Add PHP Support For Apache on CentOS8
+  - name: Add PHP Support For Apache on CentOS
     dnf:
       name: php
       state: latest
-    when: ansible_distribution == "CentOS8"
+    when: ansible_distribution == "CentOS"

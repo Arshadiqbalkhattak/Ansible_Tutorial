@@ -14,13 +14,13 @@
     when: ansible_distribution == "Ubuntu"
 
 
-  - name: Install Apache and PHP  Packages on CentOS8
+  - name: Install Apache and PHP  Packages on CentOS
     dnf:
       name: 
         - httpd
         - php
       state: latest
       update_cache: yes
-    when: ansible_distribution == "CentOS8"
+    when: ansible_distribution == "CentOS"
 
  

@@ -18,6 +18,14 @@
       state: latest
     when: ansible_distribution == "Ubuntu"
 
+  - name: start apache2 (Ubuntu)
+    tags: apache,centos,httpd
+    service:
+      name: apache2
+      state: started
+      enabled: yes
+    when: ansible_distribution == "Ubuntu"
+ 
 
   - name: Update repository index
     dnf:
@@ -32,4 +40,11 @@
       state: latest
     when: ansible_distribution == "CentOS"
 
- 
+  - name: start httpd (CentOS)
+    tags: apache,centos,httpd
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+    when: ansible_distribution == "CentOS"
+
