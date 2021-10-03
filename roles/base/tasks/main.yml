@@ -1,0 +1,7 @@
+-  name: Add ssh key for Mehek
+   tags: always
+   authorized_key:
+     user: Mehek
+     key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDBRmF9s+4UTRAihq13tQoM79QI3Ndwg5CObqpcknq3+yDDX3+OOA6DQr0FYl3EWBNv1dUBRnKBVyC+k5aQm8beXlEqoB5Ph/3N2mNwQeor164S0KVUgZw+xBdeFKbC4v1CQLoXe+5WvlxlNLkHc/q91ZdG9mrGymAY/5n0+fngKV6gc93AQLQQ+7FA8yldnxfiAnttCW4wDfPUcQHhj60qeZsU4Plxh9fFp6X++m40R4jdkjPq2cs80LKTRjW+jUf56JLnXDlRBoxDeOR4+phDL/VYAV33OVk+PDbYBCp6u90ZCcJoDJsDfUkSI4fZFfct+qDUWZKA7i2IHgEMApPUnD7H8VTovUg9Xk18Ut7kt6GZd7s9muafstuGucr44FxWDiRgqlS6AB70CwfvVIQo//REa+gXobDWD6uZYxyqUdbWRXjHCF8WuiQQxvgPqnVaWFtUt1gEuSQ6DUDhsFa2FDSvvUFfp1+kaG/rOuPctvYz8B/RwSeWEZsLA3w3E/s= server@server"
+
+

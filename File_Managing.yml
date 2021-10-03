@@ -22,11 +22,11 @@
   become: true
   tasks:
   
-  - name: install unzip
+  - name: Install unzip on Workstation Server
     package: 
       name: unzip
 
-  - name: install terraform
+  - name: Install terraform on Workstation Server
     unarchive:
       src: https://releases.hashicorp.com/terraform/1.0.8/terraform_1.0.8_freebsd_amd64.zip 
       dest: /usr/local/bin
